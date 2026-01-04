@@ -1,0 +1,3 @@
+[build]
+  publish = "."
+  command = "sed -i 's/__BUILD_ID__/'\"$DEPLOY_ID\"'/g' index.html"
