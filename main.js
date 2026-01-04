@@ -1,6 +1,7 @@
 // ================= Veo 3 JSON Prompt Builder — MAIN.JS (FINAL MODE-BASED) =================
 // Stabil, rapi, dan siap dikembangkan
 
+console.log("AUTO VERSION TEST 1");
 
 // ================= IMPORTS =================
 import { phraseDictionary } from "./dictionary/index.js";
