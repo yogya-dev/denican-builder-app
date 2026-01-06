@@ -218,21 +218,74 @@ button:disabled {
 .toast.warning { background: #f59e0b; color:#000; }
 .toast.error { background: #dc2626; color:#fff; }
 
-/* ================= MOBILE ================= */
+/* =====================================================
+   PROMPTIVE — MOBILE UX (ANDROID FIRST)
+===================================================== */
+
 @media (max-width: 768px) {
-  body { padding: 12px; }
+
+  /* ================= GLOBAL ================= */
+  body {
+    padding: 12px;
+  }
+
+  /* ================= LAYOUT ================= */
   .workspace {
     display: flex;
     flex-direction: column;
     padding: 12px;
   }
+
+  /* Urutan konten mobile (UX utama) */
+  .workspace .column:nth-child(1) {
+    order: 1; /* Mode + Data */
+  }
+
+  .workspace .column:nth-child(3) {
+    order: 2; /* Generate + Output */
+  }
+
+  .workspace .column:nth-child(2) {
+    order: 3; /* Management */
+  }
+
+  /* ================= BUTTON & INPUT ================= */
+  button {
+    min-height: 48px;
+    font-size: 15px;
+  }
+
+  .mode-btn {
+    width: 100%;
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  /* ================= PRIMARY CTA ================= */
   .primary-cta {
     position: sticky;
     bottom: 12px;
+    z-index: 99;
+    width: 100%;
     border-radius: 16px;
   }
-  .menu { display: none; }
-  .topbar { justify-content: center; }
+
+  /* ================= HEADER ================= */
+  .menu {
+    display: none;
+  }
+
+  .topbar {
+    justify-content: center;
+  }
+
+  /* ================= OUTPUT ================= */
+  .output-code {
+    font-size: 11px;
+    line-height: 1.45;
+    max-height: 360px;
+  }
+
 }
 
 /* ================= DANGER BUTTON ================= */
