@@ -298,6 +298,21 @@ button:disabled {
 
 }
 
+/* ================= MODE CARD TYPO TUNING ================= */
+.mode-card h2 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+#modeIndicator {
+  font-size: 12px;
+}
+
+#modeHint {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
 /* ================= FLOATING GENERATE BAR (ANDROID) ================= */
 @media (max-width: 768px) {
 
@@ -414,4 +429,19 @@ button:disabled {
     padding-top: env(safe-area-inset-top);
   }
 
+}
+
+/* ================= MODE CARD TYPO TUNING ANDROID ONLY ================= */
+@media (max-width: 768px) {
+  .mode-card h2 {
+    font-size: 13px;
+  }
+
+  #modeIndicator {
+    font-size: 11px;
+  }
+
+  #modeHint {
+    font-size: 10.5px;
+  }
 }
