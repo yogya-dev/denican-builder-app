@@ -400,6 +400,42 @@ function renderSceneButtons(scenes) {
   });
 }
 
+// ================= DOWNLOAD ALL (ANDROID) =================
+function downloadAllAsText(result) {
+  if (!result || !result.scenes) {
+    alert("Belum ada prompt yang bisa diunduh");
+    return;
+  }
+
+  let content = `PROJECT: ${result.project}\n`;
+  content += `TOTAL SCENES: ${result.scenes.length}\n\n`;
+
+  result.scenes.forEach(scene => {
+    content += `=============================\n`;
+    content += `SCENE ${scene.scene} (${scene.type})\n`;
+    content += `-----------------------------\n`;
+    content += `VISUAL:\n${scene.visual}\n\n`;
+    content += `ACTION:\n${scene.action}\n\n`;
+    content += `DIALOG:\n${scene.dialog || "-"}\n\n`;
+  });
+
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+
+  // WAJIB user gesture langsung
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${result.project || "promptive"}-all-scenes.txt`;
+  document.body.appendChild(a);
+  a.click();
+
+  setTimeout(() => {
+    URL.revokeObjectURL(url);
+    a.remove();
+  }, 100);
+}
+
+
 // ================= MAIN / INIT =================
  document.addEventListener("DOMContentLoaded", () => {
 
@@ -773,15 +809,14 @@ if (window.innerWidth <= 768) {
 
     // == DOWNLOAD ==
   downloadAllBtn?.addEventListener("click", () => {
-    if (!lastGeneratedResult) {
-      alert("Generate dulu sebelum download");
-      return;
-    }
-    downloadAllScenes(
-      lastGeneratedResult.project,
-      lastGeneratedResult.scenes
-    );
-  });
+  if (!lastGeneratedResult) {
+    showToast("Generate dulu sebelum download", "warning");
+    return;
+  }
+
+  downloadAllAsText(lastGeneratedResult);
+});
+
 
   // ================= FIRST LOAD =================
   renderProjectList();
