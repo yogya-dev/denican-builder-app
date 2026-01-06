@@ -387,3 +387,31 @@ button:disabled {
   }
 
 }
+/* ================= HEADER SAFE AREA ================= */
+.topbar {
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-top: env(safe-area-inset-top);
+}
+
+/* ================= BRAND LOGO SIZE ================= */
+.brand-logo {
+  height: 28px;
+  width: auto;
+  max-height: 32px;
+}
+
+/* ================= MOBILE LOGO TUNING ================= */
+@media (max-width: 768px) {
+
+  .brand-logo {
+    height: 24px;
+    max-height: 26px;
+  }
+
+  .topbar {
+    height: 56px;        /* konsisten */
+    padding-top: env(safe-area-inset-top);
+  }
+
+}
