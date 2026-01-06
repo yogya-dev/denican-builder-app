@@ -239,25 +239,6 @@ button:disabled {
     padding: 12px;
   }
 
-  /* ================= LAYOUT ================= */
-  .workspace {
-    display: flex;
-    flex-direction: column;
-    padding: 12px;
-  }
-
-  /* Urutan konten mobile (UX utama) */
-  .workspace .column:nth-child(1) {
-    order: 1; /* Mode + Data */
-  }
-
-  .workspace .column:nth-child(3) {
-    order: 2; /* Generate + Output */
-  }
-
-  .workspace .column:nth-child(2) {
-    order: 3; /* Management */
-  }
 
   /* ================= BUTTON & INPUT ================= */
   button {
@@ -296,12 +277,25 @@ button:disabled {
     max-height: 360px;
   }
 
-}
-
-@media (max-width: 768px) {
-  body {
-    background: red !important;
+  /* ================= MOBILE LAYOUT (FINAL & STABLE) ================= */
+  .workspace {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
   }
+
+  .col-input {
+    order: 1;
+  }
+
+  .col-generate {
+    order: 2;
+  }
+
+  .col-manage {
+    order: 3;
+  }
+
 }
 
 
