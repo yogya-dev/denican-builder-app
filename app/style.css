@@ -218,6 +218,16 @@ button:disabled {
 .toast.warning { background: #f59e0b; color:#000; }
 .toast.error { background: #dc2626; color:#fff; }
 
+/* ================= DANGER BUTTON ================= */
+#resetProjectsBtn {
+  background: #ef4444;
+  margin-top: 8px;
+}
+
+#resetProjectsBtn:hover {
+  background: #dc2626;
+}
+
 /* =====================================================
    PROMPTIVE — MOBILE UX (ANDROID FIRST)
 ===================================================== */
@@ -294,13 +304,4 @@ button:disabled {
   }
 }
 
-/* ================= DANGER BUTTON ================= */
-#resetProjectsBtn {
-  background: #ef4444;
-  margin-top: 8px;
-}
-
-#resetProjectsBtn:hover {
-  background: #dc2626;
-}
 
