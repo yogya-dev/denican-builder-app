@@ -298,4 +298,92 @@ button:disabled {
 
 }
 
+/* ================= FLOATING GENERATE BAR (ANDROID) ================= */
+@media (max-width: 768px) {
 
+  .generate-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 12px;
+    background: linear-gradient(
+      to top,
+      rgba(248,250,252,0.98),
+      rgba(248,250,252,0.85),
+      rgba(248,250,252,0)
+    );
+    z-index: 999;
+  }
+
+  .generate-bar .primary-cta {
+    width: 100%;
+    border-radius: 18px;
+    font-size: 16px;
+    padding: 16px;
+    box-shadow: 0 12px 28px rgba(37,99,235,0.35);
+  }
+
+  /* Spacer supaya konten tidak ketutup */
+  .bottom-spacer {
+    height: 88px;
+  }
+}
+
+/* ================= FLOATING GENERATE AUTO-HIDE ================= */
+@media (max-width: 768px) {
+
+  .generate-bar {
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  .generate-bar.hide {
+    transform: translateY(110%);
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* ================= HIDE SECONDARY INFO ON MOBILE ================= */
+@media (max-width: 768px) {
+
+  .preset-info,
+  .visual-style-info {
+    display: none;
+  }
+
+}
+
+/* ================= HEADER BRAND ================= */
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo {
+  height: 28px;
+  width: auto;
+}
+
+/* ================= HEADER BRAND ================= */
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo {
+  height: 28px;
+  width: auto;
+}
+
+@media (max-width: 768px) {
+
+  .brand-logo {
+    height: 24px;
+  }
+
+  .topbar {
+    justify-content: center;
+  }
+
+}

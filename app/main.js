@@ -682,6 +682,30 @@ outputEl.scrollIntoView({ behavior: "smooth" });
   generateBtn.style.opacity = "0.5";
 });
 
+  // ================= FLOATING GENERATE AUTO HIDE (ANDROID) =================
+if (window.innerWidth <= 768) {
+  let lastScrollY = window.scrollY;
+  const generateBar = document.querySelector(".generate-bar");
+
+  if (generateBar) {
+    window.addEventListener("scroll", () => {
+      const currentScrollY = window.scrollY;
+
+      // scroll ke bawah → tampilkan
+      if (currentScrollY > lastScrollY + 6) {
+        generateBar.classList.remove("hide");
+      }
+
+      // scroll ke atas → sembunyikan
+      if (currentScrollY < lastScrollY - 6) {
+        generateBar.classList.add("hide");
+      }
+
+      lastScrollY = currentScrollY;
+    }, { passive: true });
+  }
+}
+
     // == LOAD PROJECT ==
   loadProjectBtn?.addEventListener("click", () => {
     const p = getProjects().find(x => x.id === projectList.value);

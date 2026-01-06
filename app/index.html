@@ -15,15 +15,19 @@
 
 <!-- ================= HEADER (TAHAP 1 & 2) ================= -->
 <header class="topbar">
-  <div class="logo">Promptive</div>
+  <div class="brand">
+    <img
+      src="./assets/logo-promptive.svg"
+      alt="Promptive"
+      class="brand-logo"
+    >
+  </div>
 
   <nav class="menu">
     <a href="#">Preset</a>
     <a href="#">Builder</a>
     <a href="#">Export</a>
   </nav>
-
-  <div class="version">Veo-3 • v5.2</div>
 </header>
 
 <!-- ================= MAIN WORKSPACE (TAHAP 1 & 3) ================= -->
@@ -74,6 +78,7 @@
   <section class="column col-manage">
 
   <!-- ===== PRESET INFO ===== -->
+  <div class="box card preset-info">
   <div class="box card">
     <h2>Preset Aktif</h2>
 
@@ -87,6 +92,7 @@
   </div>
 
   <!-- ===== VISUAL STYLE INFO ===== -->
+  <div class="box card visual-style-info">
   <div class="box card">
     <h2>Visual Style</h2>
     <div id="visualStyleInfo">
@@ -115,9 +121,12 @@
   <section class="column col-generate">
 
     <div class="box card">
-      <button id="generateBtn" class="primary-cta">
-        Generate Multi-Scene Prompt
-      </button>
+      <div class="generate-bar">
+  <button id="generateBtn" class="primary-cta">
+    Generate Multi-Scene Prompt
+  </button>
+</div>
+
 
       <button id="downloadAllBtn" type="button" class="secondary-cta">
         Download Semua Prompt & Dialog
@@ -135,6 +144,7 @@
 </div>
 
 <pre id="output" class="output-code"></pre>
+<div class="bottom-spacer"></div>
 
       <div id="generateHint">
         Tombol akan aktif setelah mode konten dipilih.
