@@ -288,6 +288,12 @@ button:disabled {
 
 }
 
+@media (max-width: 768px) {
+  body {
+    background: red !important;
+  }
+}
+
 /* ================= DANGER BUTTON ================= */
 #resetProjectsBtn {
   background: #ef4444;
