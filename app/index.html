@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Veo 3 JSON Prompt Builder</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./style.css">
+
+ <!-- <link rel="manifest" href="manifest.json"> -->
+  <meta name="theme-color" content="#2563eb">
+</head>
+
+<body>
+
+<!-- ================= HEADER (TAHAP 1 & 2) ================= -->
+<header class="topbar">
+  <div class="logo">Promptive</div>
+
+  <nav class="menu">
+    <a href="#">Preset</a>
+    <a href="#">Builder</a>
+    <a href="#">Export</a>
+  </nav>
+
+  <div class="version">Veo-3 • v5.2</div>
+</header>
+
+<!-- ================= MAIN WORKSPACE (TAHAP 1 & 3) ================= -->
+<main class="workspace">
+
+  <!-- ===== COLUMN 1 : INPUT & MODE ===== -->
+  <section class="column">
+
+    <div class="box card">
+      <h2>Pilih Mode Konten</h2>
+
+      <div id="modeSelector">
+        <button type="button" class="mode-btn" data-mode="softselling">Soft Selling</button>
+        <button type="button" class="mode-btn" data-mode="edukasi">Edukasi</button>
+        <button type="button" class="mode-btn" data-mode="story">Story</button>
+      </div>
+
+      <div id="modeIndicator">Mode aktif: -</div>
+      <div id="modeHint">
+        Pilih salah satu mode untuk mulai mengisi data.
+      </div>
+    </div>
+
+    <div class="box card">
+      <h2>Data Konten</h2>
+
+      <label>Judul Konten</label>
+      <input id="projectTitle" placeholder="Belajar Warna PAUD" />
+
+      <label>Tema Konten</label>
+      <input id="tema" placeholder="Belajar sambil bermain" />
+
+      <label>Jumlah Scene</label>
+      <input id="totalScenes" type="number" min="3" value="5" />
+
+      <label>Deskripsi Visual</label>
+      <input id="visual_id" placeholder="anak di meja belajar dengan flashcard" />
+
+      <label>Aksi Utama</label>
+      <input id="action_id" placeholder="anak mewarnai flashcard" />
+
+      <input type="checkbox" id="autoTranslate" checked hidden />
+    </div>
+
+  </section>
+
+  <!-- ===== COLUMN 2 : PROJECT MANAGEMENT ===== -->
+  <section class="column">
+
+  <!-- ===== PRESET INFO ===== -->
+  <div class="box card">
+    <h2>Preset Aktif</h2>
+
+    <div id="presetName">
+      -
+    </div>
+
+    <div id="presetDesc">
+      Pilih mode untuk mengaktifkan preset.
+    </div>
+  </div>
+
+  <!-- ===== VISUAL STYLE INFO ===== -->
+  <div class="box card">
+    <h2>Visual Style</h2>
+    <div id="visualStyleInfo">
+      -
+    </div>
+  </div>
+
+  <!-- ===== PROJECT MANAGEMENT (TETAP) ===== -->
+  <div class="box card">
+    <h2>Manajemen Project</h2>
+
+    <label>Daftar Project</label>
+    <select id="projectList"></select>
+
+    <button id="loadProjectBtn" type="button">Load Project</button>
+    <button id="duplicateProjectBtn" type="button">Duplicate Project</button>
+    <button id="resetProjectsBtn" type="button">
+      Reset Semua Project
+    </button>
+  </div>
+
+</section>
+
+
+  <!-- ===== COLUMN 3 : GENERATE & OUTPUT ===== -->
+  <section class="column">
+
+    <div class="box card">
+      <button id="generateBtn" class="primary-cta">
+        Generate Multi-Scene Prompt
+      </button>
+
+      <button id="downloadAllBtn" type="button" class="secondary-cta">
+        Download Semua Prompt & Dialog
+      </button>
+
+      <div id="sceneButtons"></div>
+
+      <div class="output-header">
+  <span>Output Preview (JSON)</span>
+
+  <div class="output-actions">
+    <button id="copyOutputBtn" type="button">Copy JSON</button>
+    <button id="clearOutputBtn" type="button">Clear</button>
+  </div>
+</div>
+
+<pre id="output" class="output-code"></pre>
+
+      <div id="generateHint">
+        Tombol akan aktif setelah mode konten dipilih.
+      </div>
+    </div>
+    <div id="lockNotice">
+  🔒 Input terkunci. Ubah data untuk generate ulang.
+</div>
+
+
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  © Promptive • Build prompts, get results
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+<script type="module" src="./main.js?v=__BUILD_ID__"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+   // navigator.serviceWorker.register("./service-worker.js");
+  }
+</script>
+<div id="toast" class="toast"></div>
+</body>
+</html>

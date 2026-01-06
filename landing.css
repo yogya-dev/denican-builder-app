@@ -1,0 +1,85 @@
+/* ================= PROMPTIVE LANDING ================= */
+
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #2563eb;
+  --border: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  text-align: center;
+}
+
+/* HEADER */
+.lp-header {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.lp-logo {
+  height: 32px;
+}
+
+/* MAIN WRAPPER */
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 64px 20px;
+}
+
+/* HERO */
+h1 {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+p {
+  font-size: 16px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+/* BUTTON */
+a {
+  display: inline-block;
+  padding: 12px 18px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  opacity: 0.9;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 80px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  main {
+    padding: 48px 16px;
+  }
+}

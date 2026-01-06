@@ -1,8 +1,6 @@
 // ================= Veo 3 JSON Prompt Builder — MAIN.JS (FINAL MODE-BASED) =================
 // Stabil, rapi, dan siap dikembangkan
 
-console.log("AUTO VERSION TEST ONLINE UPDATE 1");
-
 // ================= IMPORTS =================
 import { phraseDictionary } from "./dictionary/index.js";
 import { presetRegistry } from "./presets/index.js";
@@ -376,6 +374,8 @@ function renderSceneButtons(scenes) {
     const promptText = JSON.stringify(scene, null, 2);
     navigator.clipboard.writeText(promptText);
 
+    showToast(`Scene ${scene.scene} disalin`, "success");
+
     outputEl.textContent =
       `✔️ Scene ${scene.scene} prompt copied`;
       setTimeout(() => {
@@ -407,6 +407,7 @@ function renderSceneButtons(scenes) {
   let lastGeneratedResult = null;
   let activeMode = null;
   let activeDialogType = null;
+  let isLocked = false;
 
   const MODE_TO_PRESET = {
     softselling: "softselling-short",
@@ -425,7 +426,12 @@ function renderSceneButtons(scenes) {
   const modeIndicator = document.getElementById("modeIndicator");
   const modeHint = document.getElementById("modeHint");
   const resetProjectsBtn = document.getElementById("resetProjectsBtn");
-
+  const presetNameEl = document.getElementById("presetName");
+  const presetDescEl = document.getElementById("presetDesc");
+  const visualStyleInfoEl = document.getElementById("visualStyleInfo");
+  const copyOutputBtn = document.getElementById("copyOutputBtn");
+  const clearOutputBtn = document.getElementById("clearOutputBtn");
+  const lockNotice = document.getElementById("lockNotice");
 
    // ================= DEFAULT UI STATE =================
   if (modeIndicator) {
@@ -452,10 +458,13 @@ function setInputsDisabled(disabled) {
 
    // Helper MarkDirty
 function markDirty() {
-  if (!activeDialogType) return; // belum pilih mode
+  if (!activeDialogType) return;
+  if (isLocked) { unlockUI(); }
+
   generateBtn.disabled = false;
   generateBtn.style.opacity = "1";
 }
+
   [
     projectTitle,
     tema,
@@ -466,10 +475,59 @@ function markDirty() {
     input.addEventListener("input", markDirty);
 });
 
+// ================= UX LOCK / UNLOCK =================
+  function lockUI() {
+    isLocked = true;
+
+    setInputsDisabled(true);
+
+    modeButtons.forEach(btn => {
+      btn.disabled = true;
+      btn.style.opacity = "0.6";
+    });
+
+    generateBtn.disabled = true;
+    generateBtn.style.opacity = "0.5";
+
+    if (lockNotice) {
+      lockNotice.style.display = "block";
+    }
+  }
+
+  function unlockUI() {
+  isLocked = false;
+
+  setInputsDisabled(false);
+
+  modeButtons.forEach(btn => {
+    btn.disabled = false;
+    btn.style.opacity = "1";
+  });
+
+  if (lockNotice) {
+    lockNotice.style.display = "none";
+  }
+}
+
+  // ================= HELPER TOAST =================
+  const toastEl = document.getElementById("toast");
+
+function showToast(message, type = "success", duration = 1600) {
+  if (!toastEl) return;
+
+  toastEl.textContent = message;
+  toastEl.className = `toast show ${type}`;
+
+  setTimeout(() => {
+    toastEl.className = "toast";
+  }, duration);
+}
+
   // ================= UI EVENTS =================
     // == MODE BUTTONS ==
   modeButtons.forEach(btn => {
     btn.addEventListener("click", () => {
+      if (isLocked) return;
   const mode = btn.dataset.mode;
   const style = MODE_VISUAL_STYLE[mode];
 
@@ -489,6 +547,23 @@ function markDirty() {
   }
 
   applyPreset(preset);
+
+  // === UPDATE PRESET INFO UI ===
+if (presetNameEl) {
+  presetNameEl.textContent = preset.name || btn.textContent;
+}
+
+if (presetDescEl) {
+  presetDescEl.textContent =
+    preset.description || "Preset aktif untuk mode ini.";
+}
+
+// === UPDATE VISUAL STYLE INFO ===
+if (visualStyleInfoEl) {
+  const vs = MODE_VISUAL_STYLE[mode];
+  visualStyleInfoEl.textContent =
+    `${vs.lighting}, ${vs.color}`;
+}
 
   // UPDATE UI
     modeButtons.forEach(b => b.classList.remove("active"));
@@ -512,12 +587,8 @@ if (modeHint) {
    // == GENERATE ==
 generateBtn?.addEventListener("click", () => {
   if (!activeDialogType) {
-    alert("Pilih mode konten terlebih dahulu");
+    showToast("Pilih mode konten terlebih dahulu", "warning");
     return;
-  }
-  // === FALLBACK MODE ===
-  if (!activeDialogType) {
-    activeDialogType = "edukasi";
   }
   // === FALLBACK TEMA ===
   const temaText = tema.value && tema.value.trim()
@@ -525,7 +596,6 @@ generateBtn?.addEventListener("click", () => {
     : "aktivitas belajar";
   
   const title = projectTitle.value || "Untitled Project";
-  const visualWithContext = applyContextInference(visualEN);
 
   // === FALLBACK TOTAL SCENE ===
   const total = Math.max(
@@ -552,6 +622,7 @@ generateBtn?.addEventListener("click", () => {
     : rawAction;
 
   const actionFinal = applyActionEnrichment(actionEN);
+  const visualWithContext = applyContextInference(visualEN);
 
 
   // ✅ ambil visual style dari mode
@@ -592,7 +663,7 @@ generateBtn?.addEventListener("click", () => {
   };
 
   lastGeneratedResult = result;
-  saveProject(result);
+  saveProject(result, activeDialogType);
   renderSceneButtons(scenes);
   outputEl.textContent = JSON.stringify(result, null, 2);
   const info = document.createElement("div");
@@ -602,6 +673,8 @@ generateBtn?.addEventListener("click", () => {
     info.style.marginBottom = "6px";
 
 outputEl.parentNode.insertBefore(info, outputEl);
+outputEl.scrollIntoView({ behavior: "smooth" });
+
 
 
   // kunci generate sampai dirty state aktif lagi
@@ -626,26 +699,26 @@ outputEl.parentNode.insertBefore(info, outputEl);
     outputEl.textContent = JSON.stringify(p, null, 2);
 
     setInputsDisabled(true);
+    lockUI();
+    showToast("Prompt berhasil dibuat", "success");
 
     activeMode = null;
     activeDialogType = null;
 
     modeButtons.forEach(b => b.classList.remove("active"));
-    if (modeIndicator) {
-    modeIndicator.textContent = "Mode aktif: -";
+    if (modeIndicator) { modeIndicator.textContent = "Mode aktif: -";
     }
-
-    if (modeHint) {
-    modeHint.style.display = "block";
+    if (modeHint) { modeHint.style.display = "block";
     }
 
     generateBtn.disabled = true;
     generateBtn.style.opacity = "0.5";
 
-
-
-  });
-
+      // === RESET PRESET PANEL UI (TAHAP 5) ===
+  if (presetNameEl) presetNameEl.textContent = "-";
+  if (presetDescEl) presetDescEl.textContent = "Pilih mode untuk mengaktifkan preset.";
+  if (visualStyleInfoEl) visualStyleInfoEl.textContent = "-";
+});
     // == DUPLICATE ==
   duplicateProjectBtn?.addEventListener("click", () => {
     const p = getProjects().find(x => x.id === projectList.value);
@@ -689,5 +762,22 @@ outputEl.parentNode.insertBefore(info, outputEl);
   // ================= FIRST LOAD =================
   renderProjectList();
   setInputsDisabled(true);
+
+  // == HANDLER COPY&CLEAR OUTPUT ==
+  copyOutputBtn?.addEventListener("click", () => {
+  if (!outputEl.textContent.trim()) return;
+
+  showToast("JSON berhasil disalin", "success");
+
+  navigator.clipboard.writeText(outputEl.textContent);
+  copyOutputBtn.textContent = "Copied!";
+  setTimeout(() => {
+    copyOutputBtn.textContent = "Copy JSON";
+  }, 1200);
+});
+
+clearOutputBtn?.addEventListener("click", () => {
+  outputEl.textContent = "";
+});
 
 });

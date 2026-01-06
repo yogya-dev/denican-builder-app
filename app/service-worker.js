@@ -1,6 +1,6 @@
 // ================= SERVICE WORKER — AUTO UPDATE =================
 
-const CACHE_VERSION = "veo-prompt-v5.1"; // ⬅️ GANTI SETIAP ADA UPDATE BESAR
+const CACHE_VERSION = "Veo-3 • v5.2"; // ⬅️ GANTI SETIAP ADA UPDATE BESAR
 const CACHE_NAME = `cache-${CACHE_VERSION}`;
 
 const ASSETS = [
